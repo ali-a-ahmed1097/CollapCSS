@@ -37,8 +37,15 @@ def collapse(path):
                             decl_dict['random1;'].append(l)
                             print(decl + ":" + str(decl_dict))
                 else:
-                    decl_dict[decl] = []
-                    decl_dict[decl] += atr
+                    # originally did decl_dict[decl] = atr, but this caused the dictionary keys
+                    # to just point to the address of atr instead of creating their own copy and
+                    # this means that every single time it would run this else-statement with the
+                    # same atr every key that was created by doing so would point to the same atr.
+                    # And therefore, when appending to that key value later, we would end up
+                    # changing all the keys that POINT to this value. Causing unintended behaviour.
+                    # The reason why we add atr to an empty dictionary is to force python to create
+                    # a copy.
+                    decl_dict[decl] = [] + atr
 
                 if full.strip()[0] == '}':
                     full = full[full.find('}')+1:]

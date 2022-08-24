@@ -4,9 +4,8 @@ This is just a python script intended to collapse CSS files. The idea for this e
 
 # Current
 
-Can collapse CSS files with a very specific kind of style.
+Can collapse CSS files.
 
 # Future Goals
 
-To collapse CSS files that are written with any kind of style.
-To also do an ExpandCSS which is intended to completely seperate different classes, attributes, ids, etc.
+To also do an ExpandCSS which is intended to completely seperate different classes, tags, ids, etc.
