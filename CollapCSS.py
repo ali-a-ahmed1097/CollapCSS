@@ -1,6 +1,18 @@
 import sys
 from collections import defaultdict
 
+'''
+This function extracts the names of the classes, ids, tags, etc., places them in a list, and then returns the list.
+'''
+def list_names(names):
+    l = []
+    while ',' in names:
+        first_comma = names.find(',')
+        l.append(names[:first_comma])
+        names = names[first_comma+1:].strip()
+    l.append(names)
+    return l
+
 def collapse(path):
     css = open(path, "r")
     
@@ -12,17 +24,18 @@ def collapse(path):
         full = full.strip('\n')
         if '{' and '}' in full:
             ocb = full.find('{')
-            atr = full[:ocb].strip()
+            atr = list_names(full[:ocb].strip())
             full = full[ocb+1:]
 
             while '}' in full:
                 decl = full[:full.find(';')+1].strip()
                 full = full[full.find(';')+1:]
                 if decl in decl_dict:
-                    if atr not in decl_dict[decl]:
-                        decl_dict[decl].append(atr)
+                    for l in atr:
+                        if l not in decl_dict[decl]:
+                            decl_dict[decl].append(l)
                 else:
-                    decl_dict[decl] = [atr]
+                    decl_dict[decl] = atr
 
                 if full.strip()[0] == '}':
                     full = full[full.find('}')+1:]
