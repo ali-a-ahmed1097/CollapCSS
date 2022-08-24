@@ -22,23 +22,27 @@ def collapse(path):
     for line in css:
         full += line
         full = full.strip('\n')
-        if '{' and '}' in full:
+        while '{' and '}' in full:
             ocb = full.find('{')
             atr = list_names(full[:ocb].strip())
             full = full[ocb+1:]
-
-            while '}' in full:
+            j = True
+            while ('}' in full) and j:
                 decl = full[:full.find(';')+1].strip()
                 full = full[full.find(';')+1:]
                 if decl in decl_dict:
                     for l in atr:
                         if l not in decl_dict[decl]:
-                            decl_dict[decl].append(l)
+                            print(decl + ":" + str(decl_dict))
+                            decl_dict['random1;'].append(l)
+                            print(decl + ":" + str(decl_dict))
                 else:
-                    decl_dict[decl] = atr
+                    decl_dict[decl] = []
+                    decl_dict[decl] += atr
 
                 if full.strip()[0] == '}':
                     full = full[full.find('}')+1:]
+                    j = False
 
     css.close()
     return decl_dict
