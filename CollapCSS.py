@@ -85,11 +85,8 @@ if (len(sys.argv) != 2) and (len(sys.argv) != 3):
     quit()
 
 d = collapse(sys.argv[1])
-print(d)
 sort_and_stringify_dlists(d)
-print(d)
 d = reverse_keys_and_values(d)
-print(d)
 
 if (len(sys.argv) == 2):
     write_collapse(d, sys.argv[1])
