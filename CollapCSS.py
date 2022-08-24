@@ -1,8 +1,7 @@
-from email.policy import default
 import sys
 from collections import defaultdict
 
-def collect(path):
+def collapse(path):
     css = open(path, "r")
     
     full = ''
@@ -46,17 +45,29 @@ def sort_and_stringify_dlists(d):
 
 def reverse_keys_and_values(d):
     d_inverted = defaultdict(list)
-    {d_inverted[v].append(k) for k, v in d.items()}
+    {d_inverted[v].append(k + '\n') for k, v in d.items()}
     return dict(d_inverted)
 
+def write_collapse(d, path):
+    css = open(path, 'w')
+    for k in d:
+        css.write(k+" {\n")
+        css.writelines(d[k])
+        css.write("}\n\n")
+    css.close()
 
 if (len(sys.argv) != 2) and (len(sys.argv) != 3):
     print("Insufficient number of arguments! Terminating program...")
     quit()
 
-d = collect(sys.argv[1])
+d = collapse(sys.argv[1])
 print(d)
 sort_and_stringify_dlists(d)
 print(d)
 d = reverse_keys_and_values(d)
 print(d)
+
+if (len(sys.argv) == 2):
+    write_collapse(d, sys.argv[1])
+else:
+    write_collapse(d, sys.argv[2])
