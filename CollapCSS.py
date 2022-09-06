@@ -33,9 +33,7 @@ def collapse(path):
                 if decl in decl_dict:
                     for l in atr:
                         if l not in decl_dict[decl]:
-                            print(decl + ":" + str(decl_dict))
-                            decl_dict['random1;'].append(l)
-                            print(decl + ":" + str(decl_dict))
+                            decl_dict[decl].append(l)
                 else:
                     # originally did decl_dict[decl] = atr, but this caused the dictionary keys
                     # to just point to the address of atr instead of creating their own copy and
